@@ -1,0 +1,134 @@
+#if 0
+#include <iostream>
+#include <vector>
+#include <deque>
+#include <list>
+#include <set>
+#include <map>
+#include <string>
+#include <algorithm>
+#include <iterator>
+#include <functional>
+#include <numeric>
+using namespace std;
+
+template <class T>
+inline void PRINT_ELEMENTS(const T& coll, const char* optcstr = "")
+{
+	typename T::const_iterator pos;
+
+	std::cout << optcstr;
+	for (pos = coll.begin(); pos != coll.end(); ++pos) {
+		std::cout << *pos << ' ';
+	}
+	std::cout << std::endl;
+}
+
+template <class T>
+inline void INSERT_ELEMENTS(T& coll, int first, int last)
+{
+	for (int i = first; i <= last; ++i) {
+		coll.insert(coll.end(), i);
+	}
+}
+
+
+int main(void)
+{
+	deque<int> coll;
+	list<int> subcoll;
+
+	INSERT_ELEMENTS(coll, 1, 7);
+	INSERT_ELEMENTS(coll, 1, 7);
+
+	INSERT_ELEMENTS(subcoll, 3, 6);
+
+	PRINT_ELEMENTS(coll, "coll:    ");
+	PRINT_ELEMENTS(subcoll, "subcoll: ");
+
+	// search last occurrence of subcoll in coll
+	deque<int>::iterator pos;
+	pos = find_end(coll.begin(), coll.end(),         // range
+		subcoll.begin(), subcoll.end());  // subrange
+
+
+	// print its position
+	cout << distance(coll.begin(), pos) + 1 << endl;
+
+}
+#endif
+
+
+#if 0
+#include <iostream>
+#include <vector>
+#include <deque>
+#include <list>
+#include <set>
+#include <map>
+#include <string>
+#include <algorithm>
+#include <iterator>
+#include <functional>
+#include <numeric>
+
+template <class T>
+inline void PRINT_ELEMENTS(const T& coll, const char* optcstr = "")
+{
+	typename T::const_iterator pos;
+
+	std::cout << optcstr;
+	for (pos = coll.begin(); pos != coll.end(); ++pos) {
+		std::cout << *pos << ' ';
+	}
+	std::cout << std::endl;
+}
+
+template <class T>
+inline void INSERT_ELEMENTS(T& coll, int first, int last)
+{
+	for (int i = first; i <= last; ++i) {
+		coll.insert(coll.end(), i);
+	}
+}
+
+
+using namespace std;
+
+int main(void)
+{
+	deque<int> coll;
+	list<int> subcoll;
+
+	INSERT_ELEMENTS(coll, 1, 7);
+	INSERT_ELEMENTS(coll, 1, 7);
+
+	INSERT_ELEMENTS(subcoll, 3, 6);
+
+	PRINT_ELEMENTS(coll, "coll:    ");
+	PRINT_ELEMENTS(subcoll, "subcoll: ");
+
+	// search last occurrence of subcoll in coll
+	deque<int>::iterator pos;
+	pos = find_end(coll.begin(), coll.end(),         // range
+		subcoll.begin(), subcoll.end());  // subrange
+
+
+	// loop while subcoll found as subrange of coll
+	deque<int>::iterator end(coll.end());
+	while (pos != end) {
+		// print position of first element
+		cout << "subcoll found starting with element "
+			<< distance(coll.begin(), pos) + 1
+			<< endl;
+
+		// search next occurrence of subcoll
+		end = pos;
+		pos = find_end(coll.begin(), end,               // range
+			subcoll.begin(), subcoll.end()); // subrange
+		// print its position
+		cout << distance(coll.begin(), pos) + 1 << endl;
+	}
+}
+
+#endif
